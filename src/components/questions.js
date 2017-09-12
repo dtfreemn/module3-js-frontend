@@ -8,7 +8,8 @@ class Questions {
 
   initBindingsAndEventListeners() {
     this.questionsForm = document.getElementById('new-question-form')
-    this.questionInput = document.getElementById('new-question-content')
+    this.questionTitle = document.getElementById('new-question-title')
+    this.questionContent = document.getElementById('new-question-content')
     this.questionsNode = document.getElementById('questions-container')
     this.questionsForm.addEventListener('submit',this.handleAddQuestion.bind(this))
     this.questionsNode.addEventListener('click',this.handleDeleteQuestion.bind(this))
@@ -23,23 +24,28 @@ class Questions {
 
   handleAddQuestion() {
     event.preventDefault()
-    const body = {content: this.questionInput.value}
+    const body = {
+      questioner_id: 1,
+      title: this.questionTitle.value,
+      content: this.questionContent.value
+    }
     this.adapter.createQuestion(body)
     .then( (questionJSON) => this.questions.push(new Question(questionJSON)) )
     .then(  this.render.bind(this) )
-    .then( () => this.questionInput.value = '' )
+    .then( () => this.questionsForm.reset() )
   }
 
   handleDeleteQuestion() {
-    if (event.target.dataset.action === 'delete-question' && event.target.parentElement.classList.contains("question-element")) {
-      const questionId = event.target.parentElement.dataset.questionid
+    if (event.target.dataset.action === 'delete-question' && event.target.parentElement.classList.contains("floated-right")) {
+      const questionId = parseInt(event.target.dataset.questionid)
       this.adapter.deleteQuestion(questionId)
-      .then( resp => this.removeDeletedQuestion(resp) )
+      .then(() => this.removeDeletedQuestion(questionId))
     }
   }
 
-  removeDeletedQuestion(deleteResponse) {
-    this.questions = this.questions.filter( question => question.id !== deleteResponse.questionId )
+  removeDeletedQuestion(questionId) {
+    this.questions = this.questions.filter(question => question.id !== questionId)
+    console.log(questionId, this.questions);
     this.render()
   }
 

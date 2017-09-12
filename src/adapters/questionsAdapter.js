@@ -19,7 +19,6 @@ class QuestionsAdapter {
   }
 
   createQuestion(body) {
-    console.log(body);
     const questionCreateParams = {
       method: 'POST',
       headers: {

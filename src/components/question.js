@@ -12,7 +12,7 @@ class Question {
     return `<div class="ui raised segment" data-questionid='${this.id}' data-props='${JSON.stringify(this)}' class='question-element'>
     <h3 class="ui dividing header">
       <a href="/questions/${this.id}" title="${this.title}">${this.title}</a>
-      <span class="floated-right"><i data-action='delete-question' class="trash icon"></i></span>
+      <span class="floated-right"><i data-questionid="${this.id}" data-action='delete-question' class="trash icon"></i></span>
     </h3>
     <p>${this.content}</p>
     <div class="ui divider"></div>
