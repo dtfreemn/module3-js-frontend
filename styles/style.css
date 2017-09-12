@@ -1,0 +1,10 @@
+.floated-right {
+  float: right;
+}
+.floated-left {
+  float: left;
+}
+
+header {
+  margin-bottom: 15px;
+}

@@ -5,18 +5,45 @@
     <link href="https://afeld.github.io/emoji-css/emoji.css" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="styles/semantic.min.css">
     <link rel="stylesheet" type="text/css" href="styles/style.css">
+    <link rel="import" href="/partials/navbar.html">
   </head>
   <body>
+    <header>
+      <nav>
+
+      </nav>
+      <script>
+        var link = document.querySelector('link[rel="import"]');
+        var template = link.import.querySelector('template');
+        var clone = document.importNode(template.content, true);
+
+        document.querySelector('nav').appendChild(clone);
+      </script>
+    </header>
     <div class="ui container">
       <div class="ui grid">
         <div class="two wide column"></div>
         <div class="two wide column"></div>
         <div class="eight wide column">
-          <div id="new-question-container">
-            <form id="new-question-form">
+          <div id="new-question-container" class="ui segment">
+            <form id="new-question-form" class="ui form">
+              <div class="field">
+                <label>Question</label>
+                <input type="text" name="question-title" id="new-question-title" placeholder="Do you have a Question?">
+              </div>
+              <div class="field">
+                <label>Additional Info</label>
+                <textarea name="question-content" id="new-question-content" placeholder="More details..."></textarea>
+              </div>
+              <button class="fluid ui primary button" type="submit">Ask!</button>
+            </form>
+            <!-- <form id="new-question-form">
+
+
+
               <input type="text" name="question-content" id="new-question-content">
               <input type="submit" value="Save question">
-            </form>
+            </form> -->
           </div>
           <div id="questions-container">
 
