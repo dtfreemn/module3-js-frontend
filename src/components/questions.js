@@ -30,7 +30,7 @@ class Questions {
       content: this.questionContent.value
     }
     this.adapter.createQuestion(body)
-    .then( (questionJSON) => this.questions.push(new Question(questionJSON)) )
+    .then( (questionJSON) => this.questions.unshift(new Question(questionJSON)) )
     .then(  this.render.bind(this) )
     .then( () => this.questionsForm.reset() )
   }
