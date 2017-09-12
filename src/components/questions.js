@@ -48,6 +48,6 @@ class Questions {
   }
 
   render() {
-    this.questionsNode.innerHTML = `<ul>${this.questionsHTML()}</ul>`
+    this.questionsNode.innerHTML = this.questionsHTML()
   }
 }

@@ -1,10 +1,22 @@
 class Question {
   constructor(questionJSON) {
-    this.content = questionJSON.content
-    this.id = questionJSON.id
+    this.id = questionJSON.id;
+    this.title = questionJSON.title;
+    this.content = questionJSON.content;
+    this.questioner = questionJSON.questioner;
+    this.replies = questionJSON.replies;
+    this.createdAt = helper.formatDate(questionJSON.created_at);
   }
 
   render() {
-    return `<li data-questionid='${this.id}' data-props='${JSON.stringify(this)}' class='question-element'>${this.content} <i data-action='delete-question' class="em em-scream_cat"></i></li>`
+    return `<div class="ui raised segment" data-questionid='${this.id}' data-props='${JSON.stringify(this)}' class='question-element'>
+    <h3 class="ui dividing header">
+      ${this.title}
+      <span class="ui right floated"><i data-action='delete-question' class="trash icon"></i></span>
+    </h3>
+    <p>${this.content}</p>
+    <div class="ui divider"></div>
+    <span>Asked by <a href="/users/${this.questioner.id}">${this.questioner.name}</a> on ${this.createdAt}</span>
+    </div>`
   }
 }
