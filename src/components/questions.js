@@ -3,6 +3,7 @@ class Questions {
     this.adapter = new QuestionsAdapter()
     this.questions = []
     this.initContentBindingsAndEventListeners()
+
     if (questionsId.length === 0 ){
       this.initFormBindingsAndEventListeners()
       this.fetchAndLoadQuestions()
@@ -15,23 +16,26 @@ class Questions {
     this.questionsForm = document.getElementById('new-question-form')
     this.questionTitle = document.getElementById('new-question-title')
     this.questionContent = document.getElementById('new-question-content')
-    this.questionsForm.addEventListener('submit',this.handleAddQuestion.bind(this))
+    this.questionsForm.addEventListener('submit', this.handleAddQuestion.bind(this))
   }
 
   initContentBindingsAndEventListeners() {
     this.questionsNode = document.getElementById('questions-container')
-    this.questionsNode.addEventListener('click',this.handleDeleteQuestion.bind(this))
+    this.questionsNode.addEventListener('click', this.handleDeleteQuestion.bind(this))
   }
 
   fetchSingleQuestion(id) {
-    return this.adapter.getQuestionById(id).then( question => this.questions.push( new Question(question) )).then(() => {this.render.call(this); return this}).then((questions) => questions.questions.map(question => question.replies.render()))
+    return this.adapter.getQuestionById(id)
+    .then(question => this.questions.push( new Question(question)))
+    .then(() => {this.render.call(this); return this})
+    .then((questions) => questions.questions.map(question => question.replies.render()))
   }
 
   fetchAndLoadQuestions() {
     this.adapter.getQuestions()
-    .then( questionsJSON => questionsJSON.forEach( question => this.questions.push( new Question(question) )))
-      .then( this.render.bind(this) )
-      .catch( (e) =>{console.log(e);alert('The server does not appear to be running')}  )
+    .then(questionsJSON => questionsJSON.forEach(question => this.questions.push(new Question(question))))
+    .then(this.render.bind(this))
+    .catch((e) =>{console.log(e); alert('The server does not appear to be running')})
   }
 
   handleAddQuestion() {
@@ -42,9 +46,9 @@ class Questions {
       content: this.questionContent.value
     }
     this.adapter.createQuestion(body)
-    .then( (questionJSON) => this.questions.unshift(new Question(questionJSON)) )
-    .then(  this.render.bind(this) )
-    .then( () => this.questionsForm.reset() )
+    .then((questionJSON) => this.questions.unshift(new Question(questionJSON)))
+    .then(this.render.bind(this))
+    .then(() => this.questionsForm.reset())
   }
 
   handleDeleteQuestion() {

@@ -4,10 +4,12 @@ class Session {
 		Session.adapter = new SessionsAdapter()
 		this.loginForm = document.getElementById('input-container')
 		this.emailInput = document.getElementById('user-email-input')
+
 		this.loginForm.addEventListener('submit', function(event) {
 			event.preventDefault();
 			Session.startSession(event)
 		})
+
 		this.checkLogin();
 	}
 
@@ -20,6 +22,7 @@ class Session {
 	static startSession(event) {
 		localStorage.clear()
 		const userEmail = Session.emailInput.value;
+
 		Session.adapter.createSession(userEmail, Session.failedLogin, Session.successfulLogin)
 	}
 
@@ -28,6 +31,7 @@ class Session {
 		errorDiv.className = 'ui red message'
 		errorDiv.id = 'messages'
 		errorDiv.innerText = 'User not found'
+		
 		Session.loginForm.prepend(errorDiv)
 	}
 

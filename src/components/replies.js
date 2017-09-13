@@ -12,13 +12,16 @@ class Replies {
 		this.replyForm = document.getElementById('add-reply')
 		this.replyTitle = document.getElementById('add-reply-title')
 		this.replyContent = document.getElementById('add-reply-content')
+
 		if (this.replyForm){
 			this.replyForm.addEventListener('submit', this.handleAddReply.bind(this))
 		}
+		
 		if (this.repliesContainer){
 			this.repliesContainer.addEventListener('click', (event) => {
 				event.preventDefault()
 				const action = event.target.dataset.action
+
 				if (action === 'delete-reply') {
 					this.handleDeleteReply.bind(this)
 				} else if (['up-vote', 'down-vote'].includes(action)) {
@@ -37,7 +40,7 @@ class Replies {
 			const replyId = parseInt(event.target.dataset.replyid)
 			this.adapter.deleteReply(replyId)
 			.then(() => this.removeDeletedReply(event, replyId))
-		} 
+		}
 	}
 
 	removeDeletedReply(event, replyId) {
@@ -54,7 +57,9 @@ class Replies {
 			content: this.replyContent.value,
 			replier_id: Session.adapter.getUser().id
 		}
-		this.adapter.createReply(body).then(replyJSON => this.replies.unshift(new Reply(replyJSON, this.questionId))).then(this.updatePage.bind(this))
+		this.adapter.createReply(body)
+		.then(replyJSON => this.replies.unshift(new Reply(replyJSON, this.questionId)))
+		.then(this.updatePage.bind(this))
 	}
 
 	updateReplyCount() {
@@ -71,6 +76,4 @@ class Replies {
 	render() {
 		this.repliesContainer.innerHTML = this.replies.map(reply => reply.render()).join('')
 	}
-
-
 }

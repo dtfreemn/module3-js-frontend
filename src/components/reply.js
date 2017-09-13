@@ -16,14 +16,14 @@ class Reply {
 	vote(action, target) {
 		this.likeAdapter = new LikesAdapter(this.questionId, this.id)
 		let point
+
 		if (action === 'up-vote'){
 			point = 1
 		} else if (action === 'down-vote') {
 			point = -1
 		}
-		//NEED TO FIX THIS
-		this.likeAdapter.createLike(point).catch(e => console.log(e)).then(likeObj => {
-			console.log(likeObj)
+
+		this.likeAdapter.createLike(point).catch(e => console.error(e)).then(likeObj => {
 			if (likeObj.status === 202) {
 				likeObj.json.then(likeJSON => {
 					const like = this.likes.find(like => {
@@ -43,27 +43,24 @@ class Reply {
 				})
 			}
 		})
-
 	}
 
 	render() {
 		return `<div class="ui blue raised segment" data-replyid="${this.id}" data-questionid="${this.questionId}" data-props="${JSON.stringify(this)}" class="reply-element">
-
     <h3 class="ui dividing header">
       ${this.title}
       <span class="floated-right"><i data-questionid="${this.questionId}" data-replyid="${this.id}" data-action='delete-reply' class="trash icon"></i></span>
     </h3>
     <p>${this.content}</p>
     <div class="ui divider"></div>
-    <span>Posted by <a href="/users/${this.replier.id}">${this.replier.name}</a> on ${this.createdAt}</span>
+    	<span>Posted by <a href="/users/${this.replier.id}">${this.replier.name}</a> on ${this.createdAt}</span>
+			<div class="ui bottom right attached label voting" style="margin-top: 20px; text-align:center">
+			<a href="#"><i class="arrow up icon" data-action="up-vote" style="color:green"></i></a>
 
-		<div class="ui bottom right attached label voting" style="margin-top: 20px; text-align:center">
-		<a href="#"><i class="arrow up icon" data-action="up-vote" style="color:green"></i></a>
+			<span class="likes" data-replyid="${this.id}">${this.currentScore()}</span> points &nbsp;
 
-		<span class="likes" data-replyid="${this.id}">${this.currentScore()}</span> points &nbsp;
-
-		<a href="#"><i class="arrow down icon" data-action="down-vote" style="color: #CC0000"></i></a>
-		</div>
+			<a href="#"><i class="arrow down icon" data-action="down-vote" style="color: #CC0000"></i></a>
+			</div>
     </div>`
 	}
 }
