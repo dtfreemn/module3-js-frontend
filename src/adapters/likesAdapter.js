@@ -21,7 +21,10 @@ class LikesAdapter {
 				if (resp.status === 403) {
 					throw 'already voted'
 				} else {
-				return resp.json()
+				return {
+					status: resp.status,
+					json: resp.json()
+				}
 			}
 		})
 	}

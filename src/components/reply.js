@@ -22,11 +22,28 @@ class Reply {
 			point = -1
 		}
 		//NEED TO FIX THIS
-		this.likeAdapter.createLike(point).catch(e => console.log(e)).then(likeJSON => {
-			this.likes.push(likeJSON)
-			target.querySelector(".likes").innerText = this.currentScore()
+		this.likeAdapter.createLike(point).catch(e => console.log(e)).then(likeObj => {
+			console.log(likeObj)
+			if (likeObj.status === 202) {
+				likeObj.json.then(likeJSON => {
+					const like = this.likes.find(like => {
+						return like.user_id === likeJSON.user_id && like.reply_id === likeJSON.reply_id
+					})
+
+					if (like) {
+						const index = this.likes.indexOf(like)
+						this.likes.splice(index, 1)
+					}
+					target.querySelector(".likes").innerText = this.currentScore()
+				})
+			} else {
+				likeObj.json.then(likeJSON => {
+					this.likes.push(likeJSON)
+					target.querySelector(".likes").innerText = this.currentScore()
+				})
+			}
 		})
-		
+
 	}
 
 	render() {
@@ -42,9 +59,9 @@ class Reply {
 
 		<div class="ui bottom right attached label voting" style="margin-top: 20px; text-align:center">
 		<a href="#"><i class="arrow up icon" data-action="up-vote" style="color:green"></i></a>
-		
+
 		<span class="likes" data-replyid="${this.id}">${this.currentScore()}</span> points &nbsp;
-		
+
 		<a href="#"><i class="arrow down icon" data-action="down-vote" style="color: #CC0000"></i></a>
 		</div>
     </div>`
