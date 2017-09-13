@@ -33,8 +33,8 @@ class Reply {
 					if (like) {
 						const index = this.likes.indexOf(like)
 						this.likes.splice(index, 1)
+						target.querySelector(".likes").innerText = this.currentScore()
 					}
-					target.querySelector(".likes").innerText = this.currentScore()
 				})
 			} else {
 				likeObj.json.then(likeJSON => {
