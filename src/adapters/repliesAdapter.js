@@ -15,6 +15,17 @@ class RepliesAdapter {
 		return fetch(this.baseUrl, createReplyParams).then(resp => resp.json())
 	}
 
+	deleteReply(replyId) {
+		const deleteUrl = `${this.baseUrl}/${replyId}`
+    const replyDeleteParams = {
+      method: 'DELETE',
+      headers: {
+        'Content-Type':'application/json'
+      }
+    }
+    return fetch(deleteUrl, replyDeleteParams).then(response => response.json())
+	}
+
 
 
 }

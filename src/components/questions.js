@@ -11,14 +11,6 @@ class Questions {
     }
   }
 
-  initBindingsAndEventListeners() {
-    this.questionsForm = document.getElementById('new-question-form')
-    this.questionTitle = document.getElementById('new-question-title')
-    this.questionContent = document.getElementById('new-question-content')
-    this.questionsForm.addEventListener('submit',this.handleAddQuestion.bind(this))
-    this.questionsNode.addEventListener('click',this.handleDeleteQuestion.bind(this))
-  }
-
   initFormBindingsAndEventListeners() {
     this.questionsForm = document.getElementById('new-question-form')
     this.questionTitle = document.getElementById('new-question-title')
@@ -65,7 +57,6 @@ class Questions {
 
   removeDeletedQuestion(questionId) {
     this.questions = this.questions.filter(question => question.id !== questionId)
-    console.log(questionId, this.questions);
     this.render()
   }
 

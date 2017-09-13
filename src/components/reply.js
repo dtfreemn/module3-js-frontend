@@ -7,11 +7,10 @@ class Reply {
 		this.questionId = questionId;
 		this.likes = replyJSON.likes;
 		this.createdAt = helper.formatDate(replyJSON.created_at);
-		console.log(this)
 	}
 
 	render() {
-		return `<div class="ui blue raised segment" data-replyid='${this.id} data-questionid='${this.questionId}' data-props='${JSON.stringify(this)}' class='reply-element'>
+		return `<div class="ui blue raised segment" data-replyid="${this.id}" data-questionid="${this.questionId}" data-props="${JSON.stringify(this)}" class="reply-element">
     <h3 class="ui dividing header">
       ${this.title}
       <span class="floated-right"><i data-questionid="${this.questionId}" data-replyid="${this.id}" data-action='delete-reply' class="trash icon"></i></span>
