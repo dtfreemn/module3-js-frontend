@@ -1,18 +1,26 @@
 class Questions {
-  constructor() {
-    this.questions = []
-    this.initBindingsAndEventListeners()
+  constructor(questionsId = []) {
     this.adapter = new QuestionsAdapter()
-    this.fetchAndLoadQuestions()
+    this.questions = []
+    this.questionsNode = document.getElementById('questions-container')
+    if (questionsId.length === 0 ){
+      this.initBindingsAndEventListeners()
+      this.fetchAndLoadQuestions()
+    } else {
+      questionsId.map(id => this.fetchSingleQuestion(id))
+    }
   }
 
   initBindingsAndEventListeners() {
     this.questionsForm = document.getElementById('new-question-form')
     this.questionTitle = document.getElementById('new-question-title')
     this.questionContent = document.getElementById('new-question-content')
-    this.questionsNode = document.getElementById('questions-container')
     this.questionsForm.addEventListener('submit',this.handleAddQuestion.bind(this))
     this.questionsNode.addEventListener('click',this.handleDeleteQuestion.bind(this))
+  }
+
+  fetchSingleQuestion(id) {
+    return this.adapter.getQuestionById(id).then( question => this.questions.push( new Question(question) )).then(this.render.bind(this))
   }
 
   fetchAndLoadQuestions() {
@@ -25,7 +33,7 @@ class Questions {
   handleAddQuestion() {
     event.preventDefault()
     const body = {
-      questioner_id: 1,
+      questioner_id: Session.adapter.getUser().id,
       title: this.questionTitle.value,
       content: this.questionContent.value
     }

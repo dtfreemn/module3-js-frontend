@@ -8,3 +8,11 @@
 header {
   margin-bottom: 15px;
 }
+
+.show-content {
+	display: block;
+}
+
+.hide-content {
+	display: none;
+}

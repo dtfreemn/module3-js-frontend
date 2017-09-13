@@ -7,6 +7,10 @@ class QuestionsAdapter {
     return fetch(this.baseUrl).then(response => response.json())
   }
 
+  getQuestionById(id) {
+    return fetch(this.baseUrl + `/${id}`).then(response => response.json())
+  }
+
   deleteQuestion(questionId) {
     const deleteUrl = `${this.baseUrl}/${questionId}`
     const questionDeleteParams = {
