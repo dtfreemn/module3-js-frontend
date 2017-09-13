@@ -16,16 +16,28 @@ class Replies {
 			this.replyForm.addEventListener('submit', this.handleAddReply.bind(this))
 		}
 		if (this.repliesContainer){
-			this.repliesContainer.addEventListener('click', this.handleDeleteReply.bind(this))
+			this.repliesContainer.addEventListener('click', (event) => {
+				event.preventDefault()
+				const action = event.target.dataset.action
+				if (action === 'delete-reply') {
+					this.handleDeleteReply.bind(this)
+				} else if (['up-vote', 'down-vote'].includes(action)) {
+					const replyDiv = event.target.parentElement.parentElement.parentElement
+					const replyId = replyDiv.dataset.replyid
+					const reply = this.replies.find(reply => reply.id === parseInt(replyId))
+					reply.vote(action, replyDiv)
+				}
+			})
 		}
 	}
+
 
 	handleDeleteReply(event) {
 		if (event.target.dataset.action === 'delete-reply') {
 			const replyId = parseInt(event.target.dataset.replyid)
 			this.adapter.deleteReply(replyId)
 			.then(() => this.removeDeletedReply(event, replyId))
-		}
+		} 
 	}
 
 	removeDeletedReply(event, replyId) {
