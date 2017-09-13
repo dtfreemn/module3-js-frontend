@@ -4,7 +4,7 @@ class Question {
     this.title = questionJSON.title;
     this.content = questionJSON.content;
     this.questioner = questionJSON.questioner;
-    this.replies = questionJSON.replies;
+    this.replies = new Replies(questionJSON.replies, this.id);
     this.createdAt = helper.formatDate(questionJSON.created_at);
   }
 
@@ -16,7 +16,7 @@ class Question {
     </h3>
     <p>${this.content}</p>
     <div class="ui divider"></div>
-    <span>Asked by <a href="/users/${this.questioner.id}">${this.questioner.name}</a> on ${this.createdAt}</span> <span class="floated-right">${this.replies.length} replies</span>
+    <span>Asked by <a href="/users/${this.questioner.id}">${this.questioner.name}</a> on ${this.createdAt}</span> <span class="floated-right reply-count">${this.replies.replies.length} replies</span>
     </div>`
   }
 }

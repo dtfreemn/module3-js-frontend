@@ -1,13 +1,20 @@
 class Session {
 
 	static initBindingsAndEventListeners() {
+		Session.adapter = new SessionsAdapter()
 		this.loginForm = document.getElementById('input-container')
 		this.emailInput = document.getElementById('user-email-input')
 		this.loginForm.addEventListener('submit', function(event) {
 			event.preventDefault();
-			Session.adapter = new SessionsAdapter()
 			Session.startSession(event)
 		})
+		this.checkLogin();
+	}
+
+	static checkLogin() {
+		if (Session.adapter.getUser()){
+			Session.successfulLogin();
+		}
 	}
 
 	static startSession(event) {

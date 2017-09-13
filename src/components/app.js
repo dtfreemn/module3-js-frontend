@@ -5,6 +5,7 @@ class App {
     	this.questions = new Questions();
     	Session.initBindingsAndEventListeners();
   	} else {
+  		Session.adapter = new SessionsAdapter()
   		this.questions = new Questions([questionId])
   	}
   }

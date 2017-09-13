@@ -28,6 +28,24 @@
           <div id="questions-container">
 
           </div>
+          <div class="ui divider"></div>
+            <div id="add-reply-form-container">
+              <form id="add-reply" class="ui form">
+                <div class="field">
+                  <label>Title of Reply:</label>
+                  <input type="text" id="add-reply-title">
+                </div>
+                <div class="field"> 
+                  <label>Content of Reply:</label>
+                  <textarea id="add-reply-content"></textarea>
+                </div>
+                <input type="submit" value="Reply" class="fluid ui primary button">
+              </form>
+            </div>
+          <h3>Replies to this question:</h3>
+          <div id="replies-container">
+
+          </div>
         </div>
         <div class="two wide column"></div>
         <div class="two wide column"></div>
@@ -38,6 +56,9 @@
     <script type="text/javascript" src="src/assets/semantic.min.js"></script>
     <script type="text/javascript" src="src/adapters/sessionsAdapter.js"></script>
     <script type="text/javascript" src="src/components/session.js"></script>
+    <script type="text/javascript" src="src/components/reply.js"></script>
+    <script type="text/javascript" src="src/adapters/repliesAdapter.js"></script>
+    <script type="text/javascript" src="src/components/replies.js"></script>
     <script type="text/javascript" src="src/components/question.js"></script>
     <script type="text/javascript" src="src/adapters/questionsAdapter.js"></script>
     <script type="text/javascript" src="src/components/questions.js"></script>

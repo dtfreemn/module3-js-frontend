@@ -2,9 +2,9 @@ class Questions {
   constructor(questionsId = []) {
     this.adapter = new QuestionsAdapter()
     this.questions = []
-    this.questionsNode = document.getElementById('questions-container')
+    this.initContentBindingsAndEventListeners()
     if (questionsId.length === 0 ){
-      this.initBindingsAndEventListeners()
+      this.initFormBindingsAndEventListeners()
       this.fetchAndLoadQuestions()
     } else {
       questionsId.map(id => this.fetchSingleQuestion(id))
@@ -19,15 +19,27 @@ class Questions {
     this.questionsNode.addEventListener('click',this.handleDeleteQuestion.bind(this))
   }
 
+  initFormBindingsAndEventListeners() {
+    this.questionsForm = document.getElementById('new-question-form')
+    this.questionTitle = document.getElementById('new-question-title')
+    this.questionContent = document.getElementById('new-question-content')
+    this.questionsForm.addEventListener('submit',this.handleAddQuestion.bind(this))
+  }
+
+  initContentBindingsAndEventListeners() {
+    this.questionsNode = document.getElementById('questions-container')
+    this.questionsNode.addEventListener('click',this.handleDeleteQuestion.bind(this))
+  }
+
   fetchSingleQuestion(id) {
-    return this.adapter.getQuestionById(id).then( question => this.questions.push( new Question(question) )).then(this.render.bind(this))
+    return this.adapter.getQuestionById(id).then( question => this.questions.push( new Question(question) )).then(() => {this.render.call(this); return this}).then((questions) => questions.questions.map(question => question.replies.render()))
   }
 
   fetchAndLoadQuestions() {
     this.adapter.getQuestions()
     .then( questionsJSON => questionsJSON.forEach( question => this.questions.push( new Question(question) )))
       .then( this.render.bind(this) )
-      .catch( () => alert('The server does not appear to be running') )
+      .catch( (e) =>{console.log(e);alert('The server does not appear to be running')}  )
   }
 
   handleAddQuestion() {
