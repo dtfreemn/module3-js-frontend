@@ -14,7 +14,7 @@ class SessionsAdapter {
   		if (resp.status === 404) {
   			throw 'error'
   		}	else {
-  			acceptCallback()
+  			acceptCallback(app)
   		}
   		return resp.json()
   	}).catch((e) => rejectCallback()).then(json => this.storeUser(json))

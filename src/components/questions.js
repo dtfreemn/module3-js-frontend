@@ -74,5 +74,6 @@ class Questions {
 
   render () {
     this.questionsNode.innerHTML = this.questionsHTML()
+    Session.hideQuestionerTrashButton()
   }
 }

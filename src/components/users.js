@@ -20,7 +20,7 @@ class Users {
     }.bind(this))
   }
 
-  handleCreateUser(name, email) {
+  handleCreateUser (name, email) {
     this.adapter.createUser({name: name, email: email}).then(userJSON => {
       Session.startSession(email)
       this.afterCreateActions.call(this, userJSON)

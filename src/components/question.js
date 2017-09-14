@@ -9,7 +9,7 @@ class Question {
   }
 
   render () {
-    return `<div class="ui stacked segment" data-questionid='${this.id}' data-props='${JSON.stringify(this)}' class='question-element'>
+    return `<div class="ui stacked segment question" data-questionid='${this.id}' data-props='${JSON.stringify(this)}' class='question-element'>
     <h3 class="ui dividing header">
       <a href="/question.html?id=${this.id}" title="${this.title}">${this.title}</a>
       <span class="floated-right"><i data-questionid="${this.id}" data-action='delete-question' class="trash icon"></i></span>

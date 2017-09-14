@@ -4,19 +4,17 @@ class Session {
     Session.adapter = new SessionsAdapter()
     this.loginForm = document.getElementById("input-container")
     this.emailInput = document.getElementById("user-email-input")
-    this.logoutLink = $("#logout")
 
     this.loginForm.addEventListener("submit", function (event) {
       event.preventDefault();
-      Session.startSession(event);
+      Session.startSession();
     })
 
     this.checkLogin();
   }
 
   static logoutListener () {
-
-    this.logoutLink.on("click", function (event) {
+    $("#logout").on("click", function (event) {
       if(Session.adapter.getUser()) {
         localStorage.clear()
         window.location.reload()
@@ -28,11 +26,10 @@ class Session {
   }
 
   static renderLoginLogout () {
-    console.log(Session.adapter.getUser())
     if (Session.adapter.getUser()) {
-      this.logoutLink.text(`Logout`)
+      $("#logout").text("Logout")
     } else {
-      this.logoutLink.text(`Login`)
+      $("#logout").text("Login")
     }
   }
 
@@ -60,8 +57,26 @@ class Session {
     Session.loginForm.prepend(errorDiv)
   }
 
-  static successfulLogin () {
+  static successfulLogin (app) {
     $(Session.loginForm.parentElement).addClass("hide-content")
     $("#new-question-container").removeClass("hide-content")
+  }
+
+  static hideQuestionerTrashButton () {
+
+    if (Session.adapter.getUser() === null) {
+      $(".question h3 i").remove()
+      return
+    }
+    const userId = Session.adapter.getUser().id
+    const questions = $(".question")
+
+    $.each(questions, (index, question) => {
+      const questionerId = JSON.parse(question.dataset.props).questioner.id
+
+      if (questionerId !== userId) {
+        $(question).children("h3").children("span").children().remove()
+      }
+    });
   }
 }
