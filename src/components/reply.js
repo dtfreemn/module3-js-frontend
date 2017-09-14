@@ -43,7 +43,7 @@ class Reply {
 					})
 					this.likes = this.likes.map(like => {
 						if (like === likeFind) {
-							return Object.assingn(like, likeJSON)
+							return Object.assign(like, likeJSON)
 						}
 						return like
 					})
