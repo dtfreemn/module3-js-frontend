@@ -1,6 +1,6 @@
 class App {
-  constructor() {
-    const questionId = helper.urlParams('id')
+  constructor () {
+    const questionId = helper.urlParams("id")
     if (!questionId) {
     	this.questions = new Questions();
     	Session.initBindingsAndEventListeners();

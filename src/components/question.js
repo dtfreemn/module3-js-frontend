@@ -1,5 +1,5 @@
 class Question {
-  constructor(questionJSON) {
+  constructor (questionJSON) {
     this.id = questionJSON.id;
     this.title = questionJSON.title;
     this.content = questionJSON.content;
@@ -8,7 +8,7 @@ class Question {
     this.createdAt = helper.formatDate(questionJSON.created_at);
   }
 
-  render() {
+  render () {
     return `<div class="ui stacked segment" data-questionid='${this.id}' data-props='${JSON.stringify(this)}' class='question-element'>
     <h3 class="ui dividing header">
       <a href="/question.html?id=${this.id}" title="${this.title}">${this.title}</a>
