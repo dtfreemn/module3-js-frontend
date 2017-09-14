@@ -14,6 +14,10 @@ class Reply {
   }
 
   vote (action, target) {
+    if (!Session.adapter.getUser()) {
+      return
+    }
+
     this.likeAdapter = new LikesAdapter(this.questionId, this.id)
     let point
 
@@ -39,7 +43,7 @@ class Reply {
           const likeFind = this.likes.find(like => {
             return like.user_id === likeJSON.user_id && like.reply_id === likeJSON.reply_id
           })
-          
+
           this.likes = this.likes.map(like => {
             if (like === likeFind) {
               return Object.assign(like, likeJSON)
@@ -59,7 +63,7 @@ class Reply {
     return `<div class="ui blue raised segment" data-replyid="${this.id}" data-questionid="${this.questionId}" data-props="${JSON.stringify(this)}" class="reply-element">
     <h3 class="ui dividing header">
       ${this.title}
-      <span class="floated-right"><i data-questionid="${this.questionId}" data-replyid="${this.id}" data-action='delete-reply' class="trash icon"></i></span>
+      ${this.deleteButton()}
     </h3>
     <p>${this.content}</p>
     <div class="ui divider"></div>
@@ -72,5 +76,14 @@ class Reply {
 			<a href="#"><i class="arrow down icon" data-action="down-vote" style="color: #CC0000"></i></a>
 			</div>
     </div>`
+  }
+
+  deleteButton () {
+    const trashIcon = `<span class="floated-right"><i data-questionid="${this.questionId}" data-replyid="${this.id}" data-action='delete-reply' class="trash icon"></i></span>`
+
+    if (Session.adapter.getUser() && this.replier.id === Session.adapter.getUser().id) {
+      return trashIcon
+    }
+    return ""
   }
 }

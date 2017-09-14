@@ -60,6 +60,7 @@ class Session {
   static successfulLogin (app) {
     $(Session.loginForm.parentElement).addClass("hide-content")
     $("#new-question-container").removeClass("hide-content")
+    $("#signup").addClass("hide-content")
   }
 
   static hideQuestionerTrashButton () {

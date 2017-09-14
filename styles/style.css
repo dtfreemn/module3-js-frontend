@@ -16,3 +16,7 @@ header {
 .hide-content {
 	display: none;
 }
+
+.likes, .voting a, .ui.label.voting {
+  font-size: 9.5pt
+}
