@@ -73,6 +73,10 @@ class Replies {
 	}
 
 	render() {
+		if (this.replies.length === 0) {
+			this.repliesContainer.innerHTML = "<p>No replies at this moment.</p>"
+			return
+		}
 		this.repliesContainer.innerHTML = this.replies.map(reply => reply.render()).join('')
 	}
 }
