@@ -22,8 +22,23 @@
     </header>
     <div class="ui container">
       <div class="ui grid">
-        <div class="two wide column"></div>
-        <div class="two wide column"></div>
+        <div class="four wide column">
+          <div id="signup" class="ui green segment">
+            <h3 class="ui dividing header">Sign up</h3>
+            <form id="add-user-form" class="ui form">
+              <div class="field">
+                <label>Name</label>
+                <input type="text" id="add-user-name" required>
+              </div>
+              <div class="field">
+                <label>Email</label>
+                <input type="email" id="add-user-email" required>
+              </div>
+              <button class="fluid ui green button">Submit</button>
+            </form>
+          </div>
+          <div id="user-information" ></div>
+        </div>
         <div class="eight wide column">
           <div id="questions-container">
 

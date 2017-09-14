@@ -45,7 +45,10 @@ class Session {
       userEmail = Session.emailInput.value;
     }
 
-    Session.adapter.createSession(userEmail, Session.failedLogin, Session.successfulLogin)
+    Session.adapter.createSession(userEmail, Session.failedLogin, Session.successfulLogin).then(() => {
+      const user = new User(Session.adapter.getUser())
+      user.render()
+    })
   }
 
   static failedLogin () {
@@ -64,7 +67,6 @@ class Session {
   }
 
   static hideQuestionerTrashButton () {
-
     if (Session.adapter.getUser() === null) {
       $(".question h3 i").remove()
       return
