@@ -60,6 +60,10 @@ class Questions {
   }
 
   removeDeletedQuestion (questionId) {
+    if (window.location.pathname === "/question.html") {
+      window.location = "index.html"
+      return
+    }
     this.questions = this.questions.filter(question => question.id !== questionId)
     this.render()
   }

@@ -24,8 +24,8 @@ class Reply {
     }
 
     this.likeAdapter.createLike(point).catch(e => console.error(e)).then(likeObj => {
-      if (likeObj.status === 202) {
-        likeObj.json.then(likeJSON => {
+      likeObj.json.then(likeJSON => {
+        if (likeObj.status === 202) {
           const like = this.likes.find(like => {
             return like.user_id === likeJSON.user_id && like.reply_id === likeJSON.reply_id && like.point === likeJSON.point
           })
@@ -35,12 +35,11 @@ class Reply {
             this.likes.splice(index, 1)
             target.querySelector(".likes").innerText = this.currentScore()
           }
-        })
-      } else if (likeObj.status === 200) {
-        likeObj.json.then(likeJSON => {
+        } else if (likeObj.status === 200) {
           const likeFind = this.likes.find(like => {
             return like.user_id === likeJSON.user_id && like.reply_id === likeJSON.reply_id
           })
+          
           this.likes = this.likes.map(like => {
             if (like === likeFind) {
               return Object.assign(like, likeJSON)
@@ -48,13 +47,11 @@ class Reply {
             return like
           })
           target.querySelector(".likes").innerText = this.currentScore()
-        })
-      } else {
-        likeObj.json.then(likeJSON => {
+        } else if (likeObj.status === 201) {
           this.likes.push(likeJSON)
           target.querySelector(".likes").innerText = this.currentScore()
-        })
-      }
+        }
+      })
     })
   }
 

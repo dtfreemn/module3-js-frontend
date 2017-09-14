@@ -15,13 +15,16 @@ class SessionsAdapter {
   			throw 'error'
   		}	else {
   			acceptCallback()
-  		} 
+  		}
   		return resp.json()
   	}).catch((e) => rejectCallback()).then(json => this.storeUser(json))
   }
 
   storeUser(json) {
-  	localStorage.setItem('user', JSON.stringify(json))
+		if (json) {
+			localStorage.setItem('user', JSON.stringify(json))
+			Session.renderLoginLogout()
+		}
   }
 
   getUser() {

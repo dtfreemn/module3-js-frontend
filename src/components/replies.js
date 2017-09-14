@@ -13,6 +13,8 @@ class Replies {
     this.replyTitle = document.getElementById("add-reply-title")
     this.replyContent = document.getElementById("add-reply-content")
 
+    this.renderReplyFormIfLoggedIn()
+
     if (this.replyForm){
       this.replyForm.addEventListener("submit", this.handleAddReply.bind(this))
     }
@@ -29,6 +31,17 @@ class Replies {
           const replyId = replyDiv.dataset.replyid
           const reply = this.replies.find(reply => reply.id === parseInt(replyId))
           reply.vote(action, replyDiv)
+        }
+      })
+    }
+  }
+
+  renderReplyFormIfLoggedIn () {
+    if(window.location.pathname === "/question.html") {
+      $(document).ready(function () {
+        this.addReplyFormContainer = $("#add-reply-form-container")
+        if (!Session.adapter.getUser()) {
+          this.addReplyFormContainer.addClass("hide-content")
         }
       })
     }

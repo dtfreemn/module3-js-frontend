@@ -4,13 +4,36 @@ class Session {
     Session.adapter = new SessionsAdapter()
     this.loginForm = document.getElementById("input-container")
     this.emailInput = document.getElementById("user-email-input")
+    this.logoutLink = $("#logout")
 
     this.loginForm.addEventListener("submit", function (event) {
       event.preventDefault();
-      Session.startSession(event)
+      Session.startSession(event);
     })
 
     this.checkLogin();
+  }
+
+  static logoutListener () {
+
+    this.logoutLink.on("click", function (event) {
+      if(Session.adapter.getUser()) {
+        localStorage.clear()
+        window.location.reload()
+      } else if (window.location.pathname !== "/index.html") {
+        window.location = "/index.html"
+      }
+    })
+    this.renderLoginLogout()
+  }
+
+  static renderLoginLogout () {
+    console.log(Session.adapter.getUser())
+    if (Session.adapter.getUser()) {
+      this.logoutLink.text(`Logout`)
+    } else {
+      this.logoutLink.text(`Login`)
+    }
   }
 
   static checkLogin () {
@@ -31,7 +54,7 @@ class Session {
     errorDiv.className = "ui red message"
     errorDiv.id = "messages"
     errorDiv.innerText = "User not found"
-		
+
     Session.loginForm.prepend(errorDiv)
   }
 
