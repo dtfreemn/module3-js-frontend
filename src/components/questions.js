@@ -65,7 +65,7 @@ class Questions {
   }
 
   questionsHTML() {
-    return this.questions.map( question => question.render() ).join('')
+    return this.questions.map(question => question.render()).join('')
   }
 
   render() {

@@ -16,14 +16,14 @@ class Replies {
 		if (this.replyForm){
 			this.replyForm.addEventListener('submit', this.handleAddReply.bind(this))
 		}
-		
+
 		if (this.repliesContainer){
 			this.repliesContainer.addEventListener('click', (event) => {
 				event.preventDefault()
 				const action = event.target.dataset.action
 
 				if (action === 'delete-reply') {
-					this.handleDeleteReply.bind(this)
+					this.handleDeleteReply.call(this, event)
 				} else if (['up-vote', 'down-vote'].includes(action)) {
 					const replyDiv = event.target.parentElement.parentElement.parentElement
 					const replyId = replyDiv.dataset.replyid
@@ -33,7 +33,6 @@ class Replies {
 			})
 		}
 	}
-
 
 	handleDeleteReply(event) {
 		if (event.target.dataset.action === 'delete-reply') {
@@ -70,7 +69,7 @@ class Replies {
 	updatePage() {
 		this.render();
 		this.updateReplyCount();
-		this.replyForm.reset()
+		this.replyForm.reset();
 	}
 
 	render() {

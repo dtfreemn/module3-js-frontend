@@ -27,7 +27,7 @@ class Reply {
 			if (likeObj.status === 202) {
 				likeObj.json.then(likeJSON => {
 					const like = this.likes.find(like => {
-						return like.user_id === likeJSON.user_id && like.reply_id === likeJSON.reply_id
+						return like.user_id === likeJSON.user_id && like.reply_id === likeJSON.reply_id && like.point === likeJSON.point
 					})
 
 					if (like) {
@@ -35,6 +35,19 @@ class Reply {
 						this.likes.splice(index, 1)
 						target.querySelector(".likes").innerText = this.currentScore()
 					}
+				})
+			} else if (likeObj.status === 200) {
+				likeObj.json.then(likeJSON => {
+					const likeFind = this.likes.find(like => {
+						return like.user_id === likeJSON.user_id && like.reply_id === likeJSON.reply_id
+					})
+					this.likes = this.likes.map(like => {
+						if (like === likeFind) {
+							return Object.assingn(like, likeJSON)
+						}
+						return like
+					})
+					target.querySelector(".likes").innerText = this.currentScore()
 				})
 			} else {
 				likeObj.json.then(likeJSON => {
