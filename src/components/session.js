@@ -42,9 +42,11 @@ class Session {
     }
   }
 
-  static startSession (event) {
+  static startSession (userEmail) {
     localStorage.clear()
-    const userEmail = Session.emailInput.value;
+    if (!userEmail) {
+      userEmail = Session.emailInput.value;
+    }
 
     Session.adapter.createSession(userEmail, Session.failedLogin, Session.successfulLogin)
   }

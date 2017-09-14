@@ -8,5 +8,6 @@ class App {
   		Session.adapter = new SessionsAdapter()
   		this.questions = new Questions([questionId])
   	}
+    this.users = new Users()
   }
 }

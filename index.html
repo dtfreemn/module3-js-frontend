@@ -22,12 +22,27 @@
     </header>
     <div class="ui container">
       <div class="ui grid">
-        <div class="two wide column"></div>
-        <div class="two wide column"></div>
+        <div class="four wide column">
+          <div id="signup" class="ui green segment">
+            <h3 class="ui dividing header">Sign up</h3>
+            <form id="add-user-form" class="ui form">
+              <div class="field">
+                <label>Name</label>
+                <input type="text" id="add-user-name" required>
+              </div>
+              <div class="field">
+                <label>Email</label>
+                <input type="email" id="add-user-email" required>
+              </div>
+              <button class="fluid ui green button">Submit</button>
+            </form>
+          </div>
+          <div id="user-information" ></div>
+        </div>
         <div class="eight wide column">
           <div id="log-in" class="ui segment">
             <form id="input-container" class="ui form">
-              <h3>Please Log In</h3>
+              <h3 class="ui dividing header">Please Log In</h3>
               <div class="field">
                 <label>Email: </label>
                 <input type="email" id="user-email-input">
@@ -61,6 +76,9 @@
 
     <script type="text/javascript" src="src/assets/jquery-3.1.1.min.js"></script>
     <script type="text/javascript" src="src/assets/semantic.min.js"></script>
+    <script type="text/javascript" src="src/components/users.js"></script>
+    <script type="text/javascript" src="src/adapters/usersAdapter.js"></script>
+    <script type="text/javascript" src="src/components/user.js"></script>
     <script type="text/javascript" src="src/adapters/sessionsAdapter.js"></script>
     <script type="text/javascript" src="src/components/session.js"></script>
     <script type="text/javascript" src="src/adapters/likesAdapter.js"></script>
