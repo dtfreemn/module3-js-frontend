@@ -4,7 +4,7 @@ class SessionsAdapter {
   }
 
   createSession(userEmail, rejectCallback, acceptCallback) {
-  	return fetch(this.baseUrl, {
+    return fetch(this.baseUrl, {
   		method: 'post',
   		body: JSON.stringify({email: userEmail}),
   		headers: {
@@ -12,16 +12,16 @@ class SessionsAdapter {
       }
   	}).then(function(resp) {
   		if (resp.status === 404) {
-  			throw 'error'
+        throw 'error'
   		}	else {
-  			acceptCallback(app)
+  			// acceptCallback(app)
   		}
   		return resp.json()
-  	}).catch((e) => rejectCallback()).then(json => this.storeUser(json))
+  	}).catch((e) => rejectCallback()).then(json => this.storeUser(json)).then(Session.checkLogin)
   }
 
   storeUser(json) {
-		if (json) {
+    if (json) {
 			localStorage.setItem('user', JSON.stringify(json))
 			Session.renderLoginLogout()
 		}

@@ -36,6 +36,7 @@ class Questions {
       .then(questionsJSON => questionsJSON.forEach(question => this.questions.push(new Question(question))))
       .then(this.render.bind(this))
       .catch((e) =>{console.log(e); alert("The server does not appear to be running")})
+    
   }
 
   handleAddQuestion () {

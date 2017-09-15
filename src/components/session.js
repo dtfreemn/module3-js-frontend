@@ -4,6 +4,7 @@ class Session {
     Session.adapter = new SessionsAdapter()
     this.loginForm = document.getElementById("input-container")
     this.emailInput = document.getElementById("user-email-input")
+    this.signUpForm = $("#add-user-form")
 
     this.loginForm.addEventListener("submit", function (event) {
       event.preventDefault();
@@ -34,6 +35,7 @@ class Session {
   }
 
   static checkLogin () {
+    console.log("in check login")
     if (Session.adapter.getUser()){
       Session.successfulLogin();
     }
@@ -57,7 +59,11 @@ class Session {
     errorDiv.id = "messages"
     errorDiv.innerText = "User not found"
 
+    if (Session.loginForm) {
     Session.loginForm.prepend(errorDiv)
+  } else if (Session.signUpForm) {
+    Session.signUpForm.prepend(errorDiv)
+  }
   }
 
   static successfulLogin (app) {
