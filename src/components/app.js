@@ -13,6 +13,7 @@ class App {
     if (Session.adapter.getUser()) {
       this.users.users.push(new User(Session.adapter.getUser()))
       this.users.users[0].render()
+      Session.successfulLogin();
     }
   }
 }

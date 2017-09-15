@@ -35,7 +35,6 @@ class Session {
   }
 
   static checkLogin () {
-    console.log("in check login")
     if (Session.adapter.getUser()){
       Session.successfulLogin();
     }
@@ -67,8 +66,10 @@ class Session {
   }
 
   static successfulLogin (app) {
-    $(Session.loginForm.parentElement).addClass("hide-content")
-    $("#new-question-container").removeClass("hide-content")
+    if (window.location.pathname === "/index.html") {
+      $(Session.loginForm.parentElement).addClass("hide-content")
+      $("#new-question-container").removeClass("hide-content")
+    }
     $("#signup").addClass("hide-content")
   }
 
