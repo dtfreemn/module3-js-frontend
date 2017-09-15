@@ -71,6 +71,7 @@ class Session {
       $("#new-question-container").removeClass("hide-content")
     }
     $("#signup").addClass("hide-content")
+    new Questions()
   }
 
   static hideQuestionerTrashButton () {
