@@ -3,7 +3,10 @@ class QuestionsAdapter {
     this.baseUrl = 'http://localhost:3000/api/v1/questions'
   }
 
-  getQuestions() {
+  getQuestions(term) {
+    if (term) {
+      return fetch(`${this.baseUrl}/search/${term}`).then(response => response.json())
+    }
     return fetch(this.baseUrl).then(response => response.json())
   }
 

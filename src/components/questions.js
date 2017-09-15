@@ -4,7 +4,10 @@ class Questions {
     this.questions = []
     this.initContentBindingsAndEventListeners()
 
-    if (questionsId.length === 0 ){
+    if (questionsId.length === 0 && helper.urlParams("q")){
+      this.initFormBindingsAndEventListeners()
+      this.fetchAndLoadQuestions(helper.urlParams("q"))
+    } else if (questionsId.length === 0 ){
       this.initFormBindingsAndEventListeners()
       this.fetchAndLoadQuestions()
     } else {
@@ -21,22 +24,34 @@ class Questions {
 
   initContentBindingsAndEventListeners () {
     this.questionsNode = document.getElementById("questions-container")
+    this.searchBar = document.getElementById("term-input")
+    this.searchForm = document.getElementById("search-form")
     this.questionsNode.addEventListener("click", this.handleDeleteQuestion.bind(this))
+    this.searchForm.addEventListener("submit", function(event) {
+      if(window.location.pathname === "/index.html") {
+        event.preventDefault()
+      }
+      this.fetchAndLoadQuestions(this.searchBar.value)
+    }.bind(this))
   }
 
   fetchSingleQuestion (id) {
     return this.adapter.getQuestionById(id)
-      .then(question => this.questions.push( new Question(question)))
+      .then(question => this.questions.push(new Question(question)))
       .then(() => {this.render.call(this); return this})
       .then((questions) => questions.questions.map(question => question.replies.render()))
   }
 
-  fetchAndLoadQuestions () {
-    this.adapter.getQuestions()
-      .then(questionsJSON => questionsJSON.forEach(question => this.questions.push(new Question(question))))
+  fetchAndLoadQuestions (term) {
+    this.adapter.getQuestions(term)
+      .then(questionsJSON => {
+        if (term) {
+          this.questions = []
+        }
+        questionsJSON.forEach(question => this.questions.push(new Question(question)))
+      })
       .then(this.render.bind(this))
-      .catch((e) =>{console.log(e); alert("The server does not appear to be running")})
-    
+      .catch((e) => console.log(e))
   }
 
   handleAddQuestion () {
@@ -74,6 +89,7 @@ class Questions {
   }
 
   render () {
+    this.questionsNode.innerHTML= ""
     this.questionsNode.innerHTML = this.questionsHTML()
     Session.hideQuestionerTrashButton()
   }

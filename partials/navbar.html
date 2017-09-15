@@ -4,11 +4,15 @@
   <a class="item" href="/index.html">Home</a>
   <div class="right menu">
     <div class="item">
+      <form method="get" id="search-form" action="/index.html">
       <div class="ui action left icon input">
-        <i class="search icon"></i>
-        <input type="text" placeholder="Search">
-        <button class="ui button">Submit</button>
+
+          <i class="search icon"></i>
+          <input id="term-input" name="q" type="text" placeholder="Search">
+          <button id="search-button" type="submit" class="ui button">Go</button>
+
       </div>
+      </form>
     </div>
     <a class="item" href="#" id="logout"></a>
   </div>
