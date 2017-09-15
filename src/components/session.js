@@ -71,7 +71,13 @@ class Session {
       $("#new-question-container").removeClass("hide-content")
     }
     $("#signup").addClass("hide-content")
-    new Questions()
+
+    if (window.location.pathname === "/question.html") {
+      Session.adapter = new SessionsAdapter()
+      new Questions(helper.urlParams("id"))
+    } else {
+      new Questions()
+    }
   }
 
   static hideQuestionerTrashButton () {

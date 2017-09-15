@@ -10,7 +10,7 @@ class Questions {
     } else if (questionsId.length === 0 ){
       this.initFormBindingsAndEventListeners()
       this.fetchAndLoadQuestions()
-    } else {
+    } else if (Array.isArray(questionsId)) {
       questionsId.map(id => this.fetchSingleQuestion(id))
     }
   }
