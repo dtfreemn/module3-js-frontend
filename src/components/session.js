@@ -46,10 +46,7 @@ class Session {
       userEmail = Session.emailInput.value;
     }
 
-    Session.adapter.createSession(userEmail, Session.failedLogin, Session.successfulLogin).then(() => {
-      const user = new User(Session.adapter.getUser())
-      user.render()
-    })
+    Session.adapter.createSession(userEmail, Session.failedLogin, Session.successfulLogin)
   }
 
   static failedLogin () {
@@ -59,10 +56,10 @@ class Session {
     errorDiv.innerText = "User not found"
 
     if (Session.loginForm) {
-    Session.loginForm.prepend(errorDiv)
-  } else if (Session.signUpForm) {
-    Session.signUpForm.prepend(errorDiv)
-  }
+      Session.loginForm.prepend(errorDiv)
+    } else if (Session.signUpForm) {
+      Session.signUpForm.prepend(errorDiv)
+    }
   }
 
   static successfulLogin (app) {
@@ -77,6 +74,10 @@ class Session {
       new Questions(helper.urlParams("id"))
     } else {
       new Questions()
+    }
+    if(Session.adapter.getUser()) {
+      const user = new User(Session.adapter.getUser())
+      user.render()
     }
   }
 
